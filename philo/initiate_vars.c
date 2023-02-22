@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:03:36 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/18 15:19:31 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/23 00:39:10 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,22 @@ int	initiate_philos(t_ctl *ctl)
 		ctl->philos[i].time_last_eat = ctl->time_start;
 		ctl->philos[i].ctl = ctl;
 		ctl->philos[i].mtx = ctl->mtx;
+		// if (ctl->philos[i].idx % 2 == 0)
+		// {
+		// 	ctl->philos[i].l_fork = ;
+		// 	ctl->philos[i].r_fork = ;
+		// }
+		// else
+		// {
+		// 	ctl->philos[i].l_fork = ;
+		// 	ctl->philos[i].r_fork = ;
+		// }
+		ctl->philos[i].l_fork = ((i % 2) + i) % ctl->pop;
+		ctl->philos[i].r_fork = (((i + 1) % 2) + i) % ctl->pop;
+		// printf("philo%d: %d, %d\n", i, ctl->philos[i].l_fork, ctl->philos[i].r_fork);
 		i++;
 	}
+	// exit(0);
 	return (0);
 }
 

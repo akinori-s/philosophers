@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:58:43 by asasada           #+#    #+#             */
-/*   Updated: 2023/01/22 23:46:52 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/23 00:34:37 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void	*routine(void *phil)
 	p = (t_philo *)phil;
 	while (1)
 	{
-		pthread_mutex_lock(&(p->mtx[p->idx]));
+		pthread_mutex_lock(&(p->mtx[p->l_fork]));
 		print_message(FORK, p);
 		if (p->ctl->pop == 1)
 			return ((void *)(long)pthread_mutex_unlock(&(p->mtx[p->idx])));
-		pthread_mutex_lock(&(p->mtx[(p->idx + 1) % p->ctl->pop]));
+		pthread_mutex_lock(&(p->mtx[p->r_fork]));
 		print_message(FORK, p);
 		print_message(EAT, p);
 		philo_sleep(p->ctl->time_to_eat);

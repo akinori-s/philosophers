@@ -52,6 +52,8 @@ typedef struct s_ctl
 typedef struct s_philo
 {
 	int				idx;
+	int				l_fork;
+	int				r_fork;
 	int				times_eaten;
 	struct s_ctl	*ctl;
 	pthread_mutex_t	*mtx;
