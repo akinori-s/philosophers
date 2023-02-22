@@ -1,0 +1,7 @@
+*.a
+*.o
+*.txt
+.vscode
+
+*/philo
+*/philo_bonus
