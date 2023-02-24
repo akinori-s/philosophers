@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:22:22 by asasada           #+#    #+#             */
-/*   Updated: 2023/01/22 23:21:23 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 02:29:01 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@ int	philo_routine(t_philo *philo)
 {
 	while (1)
 	{
+		sem_wait(philo->ctl->sem_chair);
 		sem_wait(philo->ctl->sem_fork);
 		print_message(FORK, philo);
 		sem_wait(philo->ctl->sem_fork);
 		print_message(FORK, philo);
 		print_message(EAT, philo);
 		philo_sleep(philo->ctl->time_to_eat);
-		philo->time_last_eat = ms_time();
 		philo->times_eaten++;
 		sem_post(philo->ctl->sem_fork);
 		sem_post(philo->ctl->sem_fork);
+		sem_post(philo->ctl->sem_chair);
 		print_message(SLEEP, philo);
 		philo_sleep(philo->ctl->time_to_sleep);
 		print_message(THINK, philo);
@@ -47,8 +48,10 @@ void	*monitor_philo(void *p)
 			sem_post(philo->ctl->sem_finished);
 			break ;
 		}
+		sem_wait(philo->ctl->sem_philos[philo->idx]);
 		b = philo->time_last_eat;
-		a = ms_time();
+		sem_post(philo->ctl->sem_philos[philo->idx]);
+		a = ms_time() - philo->ctl->time_start;
 		if (a - b > (unsigned long)philo->ctl->time_to_die)
 		{
 			print_message(DIED, philo);
@@ -65,7 +68,7 @@ int	philo_process(t_ctl *ctl, int i)
 
 	philo.ctl = ctl;
 	philo.idx = i;
-	philo.time_last_eat = ms_time();
+	philo.time_last_eat = ms_time() - ctl->time_start;
 	philo.times_eaten = 0;
 	if (pthread_create(&(philo.thread), NULL, monitor_philo, &philo) == ERROR)
 		return (ERROR);

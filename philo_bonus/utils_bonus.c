@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:49:10 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/18 17:37:01 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 02:26:30 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ int	print_message(int message, t_philo *philo)
 	unsigned long	time_ms;
 
 	sem_wait(philo->ctl->sem_print);
+	sem_wait(philo->ctl->sem_philos[philo->idx]);
 	time_ms = ms_time() - philo->ctl->time_start;
+	if (message == EAT)
+		philo->time_last_eat = time_ms;
+	sem_post(philo->ctl->sem_philos[philo->idx]);
 	if (philo->ctl->philo_dead == 0)
 	{
 		print_alive_messages(message, philo, time_ms);

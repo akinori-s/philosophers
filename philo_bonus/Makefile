@@ -15,7 +15,10 @@ SRCS	:=	main_bonus.c \
 			inputs_bonus.c \
 			utils_bonus.c \
 			philo_bonus.c \
-			init_vars.c
+			init_vars_bonus.c \
+			itoa_bonus.c \
+			strjoin_bonus.c \
+			sem_philos.c
 
 SRCS	:= $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS	:= $(SRCS:.c=.o)
@@ -54,5 +57,8 @@ norm:
 
 address:	$(OBJS) $(HEADERS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread -fsanitize=address
+
+thread:	$(OBJS) $(HEADERS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread -fsanitize=thread
 
 .PHONY:	all clean fclean re bonus do norm

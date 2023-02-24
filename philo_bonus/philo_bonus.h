@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:13:51 by asasada           #+#    #+#             */
-/*   Updated: 2023/01/22 21:27:59 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 02:54:06 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ typedef struct s_ctl
 	sem_t			*sem_print;
 	sem_t			*sem_dead;
 	sem_t			*sem_finished;
+	sem_t			*sem_chair;
+	sem_t			**sem_philos;
+	char			**sem_names;
+	int				sem_name_count;
+	int				num_chairs;
 }	t_ctl;
 
 typedef struct s_philo
@@ -92,9 +97,19 @@ void			*monitor_philo(void *p);
 int				philo_process(t_ctl *ctl, int i);
 int				start_process(t_ctl *ctl);
 
-// inti_vars.c
+// init_vars_bonus.c
 int				init_semaphore(t_ctl *ctl);
 int				destroy_semaphore(t_ctl *ctl);
 int				init_vars(t_ctl *ctl);
+
+// sem_philos.c
+int				free_names(t_ctl *ctl, int i);
+int				init_philo_sems(t_ctl *ctl);
+int				destroy_philo_sems(t_ctl *ctl);
+
+// libftstuff
+size_t			ft_strlen(const char *s);
+char			*ft_itoa(int n);
+char			*ft_strjoin(char const *s1, char const *s2);
 
 #endif
