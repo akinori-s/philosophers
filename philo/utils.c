@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:58:43 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 00:15:25 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 00:32:24 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	*routine(void *phil)
 		pthread_mutex_lock(&(p->mtx[p->l_fork]));
 		print_message(FORK, p);
 		if (p->ctl->pop == 1)
-			return ((void *)(long)pthread_mutex_unlock(&(p->mtx[p->idx])));
+			return ((void *)(long)pthread_mutex_unlock(&(p->mtx[p->l_fork])));
 		pthread_mutex_lock(&(p->mtx[p->r_fork]));
 		print_message(FORK, p);
 		print_message(EAT, p);
