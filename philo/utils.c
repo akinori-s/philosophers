@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:58:43 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/24 23:49:39 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 00:15:25 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	*routine(void *phil)
 		print_message(FORK, p);
 		print_message(EAT, p);
 		philo_sleep(p->ctl->time_to_eat);
-		p->time_last_eat = ms_time(NULL) - p->ctl->time_start;
 		if (++p->times_eaten == p->ctl->opt_count && p->ctl->has_opt)
 			p->ctl->num_finished_eating++;
 		pthread_mutex_unlock(&(p->mtx[p->r_fork]));
