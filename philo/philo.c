@@ -27,7 +27,16 @@ int	start_threads(t_ctl *ctl)
 		if (ret != 0)
 			return (ERROR);
 		usleep(THREAD_CREATION_BUFFER);
-		i++;
+		i += 2;
+	}
+	i = 1;
+	while (i < ctl->pop)
+	{
+		ret = pthread_create(&(ctl->th[i]), NULL, routine, &(ctl->philos[i]));
+		if (ret != 0)
+			return (ERROR);
+		usleep(THREAD_CREATION_BUFFER);
+		i += 2;
 	}
 	return (0);
 }
