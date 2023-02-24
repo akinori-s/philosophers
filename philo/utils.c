@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:58:43 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 00:32:24 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 00:57:49 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	print_message(int message, t_philo *philo)
 	pthread_mutex_lock(philo->tmtx);
 	time_ms = ms_time(NULL) - philo->ctl->time_start;
 	if (message == EAT)
-		philo->time_last_eat = time_ms + philo->ctl->time_to_eat;
+		philo->time_last_eat = time_ms;
 	pthread_mutex_unlock(philo->tmtx);
 	if (philo->ctl->philo_dead == 0)
 	{
