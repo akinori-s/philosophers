@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:58:43 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/23 00:34:37 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/24 23:49:39 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,39 @@ unsigned long	ms_time(int *error)
 	return (ret);
 }
 
-int	print_alive_messages(int message, t_philo *philo, unsigned long time_ms)
+int	print_alive_messages(int *message, t_philo *philo, unsigned long time_ms)
 {
-	if (message == FORK)
+	if (time_ms - philo->time_last_eat > (unsigned long)philo->ctl->time_to_die
+		&& philo->time_last_eat < time_ms)
+	{
+		philo->ctl->philo_dead = 1;
+		*message = DIED;
+		return (0);
+	}
+	if (*message == FORK)
 		printf("%lu\t %d has taken a fork\n", time_ms, philo->idx + 1);
-	if (message == EAT)
+	else if (*message == EAT)
 		printf("%lu\t %d is eating\n", time_ms, philo->idx + 1);
-	if (message == SLEEP)
+	else if (*message == SLEEP)
 		printf("%lu\t %d is sleeping\n", time_ms, philo->idx + 1);
-	if (message == THINK)
+	else if (*message == THINK)
 		printf("%lu\t %d is thinking\n", time_ms, philo->idx + 1);
 	return (0);
 }
 
 int	print_message(int message, t_philo *philo)
 {
-	int				ret;
 	unsigned long	time_ms;
 
-	ret = 0;
 	pthread_mutex_lock(philo->ctl->pmtx);
-	time_ms = ms_time(&ret) - philo->ctl->time_start;
-	if (ret == ERROR || philo->ctl->philo_dead == 1)
-		ret = ERROR;
-	else if (philo->ctl->philo_dead == 0)
+	pthread_mutex_lock(philo->tmtx);
+	time_ms = ms_time(NULL) - philo->ctl->time_start;
+	if (message == EAT)
+		philo->time_last_eat = time_ms + philo->ctl->time_to_eat;
+	pthread_mutex_unlock(philo->tmtx);
+	if (philo->ctl->philo_dead == 0)
 	{
-		print_alive_messages(message, philo, time_ms);
+		print_alive_messages(&message, philo, time_ms);
 		if (message == DIED)
 		{
 			printf("%lu\t %d died\n", time_ms, philo->idx + 1);
@@ -66,7 +73,7 @@ int	print_message(int message, t_philo *philo)
 		}
 	}
 	pthread_mutex_unlock(philo->ctl->pmtx);
-	return (ret);
+	return (0);
 }
 
 void	philo_sleep(unsigned long milli_secs)
@@ -95,11 +102,11 @@ void	*routine(void *phil)
 		print_message(FORK, p);
 		print_message(EAT, p);
 		philo_sleep(p->ctl->time_to_eat);
+		p->time_last_eat = ms_time(NULL) - p->ctl->time_start;
 		if (++p->times_eaten == p->ctl->opt_count && p->ctl->has_opt)
 			p->ctl->num_finished_eating++;
-		pthread_mutex_unlock(&(p->mtx[(p->idx + 1) % p->ctl->pop]));
-		pthread_mutex_unlock(&(p->mtx[p->idx]));
-		p->time_last_eat = ms_time(NULL);
+		pthread_mutex_unlock(&(p->mtx[p->r_fork]));
+		pthread_mutex_unlock(&(p->mtx[p->l_fork]));
 		print_message(SLEEP, p);
 		philo_sleep(p->ctl->time_to_sleep);
 		print_message(THINK, p);

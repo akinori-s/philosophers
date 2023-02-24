@@ -51,4 +51,7 @@ norm:
 thread:	$(OBJS) $(HEADERS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread -fsanitize=thread
 
+address:	$(OBJS) $(HEADERS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread -fsanitize=address
+
 .PHONY:	all clean fclean re bonus do norm

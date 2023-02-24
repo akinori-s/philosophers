@@ -46,6 +46,7 @@ typedef struct s_ctl
 	pthread_t		*th;
 	pthread_mutex_t	*mtx;
 	pthread_mutex_t	*pmtx;
+	pthread_mutex_t	*tmtx;
 	unsigned long	time_start;
 }	t_ctl;
 
@@ -57,6 +58,7 @@ typedef struct s_philo
 	int				times_eaten;
 	struct s_ctl	*ctl;
 	pthread_mutex_t	*mtx;
+	pthread_mutex_t	*tmtx;
 	unsigned long	time_last_eat;
 }	t_philo;
 
@@ -68,7 +70,7 @@ void			free_return(t_ctl *ctl);
 
 // utils.c
 unsigned long	ms_time(int *error);
-int				print_alive_messages(int msg, t_philo *p, unsigned long time);
+int				print_alive_messages(int *msg, t_philo *p, unsigned long time);
 int				print_message(int message, t_philo *philo);
 void			philo_sleep(unsigned long milli_secs);
 void			*routine(void *phil);
@@ -82,5 +84,7 @@ int				process_inputs(t_ctl *ctl, int argc, char **argv);
 // initiate_vars.c
 int				initiate_philos(t_ctl *ctl);
 int				initiate_vars(t_ctl *ctl);
+int				initiate_tmtx(t_ctl *ctl);
+void			free_tmtx(t_ctl *ctl);
 
 #endif
