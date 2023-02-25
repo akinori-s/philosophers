@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 02:52:57 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 02:55:40 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 11:59:58 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	malloc_sem_philos(t_ctl *ctl)
 	ctl->sem_names = malloc(sizeof(char *) * ctl->pop);
 	if (ctl->sem_names == NULL)
 		return (ERROR);
+	memset(ctl->sem_names, 0, sizeof(char *) * ctl->pop);
 	return (0);
 }
 

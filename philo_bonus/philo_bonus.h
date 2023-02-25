@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:13:51 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 02:54:06 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 12:00:36 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pthread.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <string.h>
 
 # include <fcntl.h>
 # include <semaphore.h>
