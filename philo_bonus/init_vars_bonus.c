@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:27:08 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 13:32:53 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 14:27:27 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	unlink_sems(void)
 		sem_unlink("dead") == ERROR || \
 		sem_unlink("finished") == ERROR || \
 		sem_unlink("chairs") == ERROR)
-		return (ERROR);
+		return (0);
 	return (0);
 }
 

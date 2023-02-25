@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 02:52:57 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 13:19:31 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 14:27:13 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	destroy_philo_sems(t_ctl *ctl)
 	int	i;
 
 	i = 0;
+	if (ctl->sem_philos == NULL)
+		return (0);
 	while (i < ctl->pop)
 	{
 		if (ctl->sem_philos[i] != NULL)
