@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:12:53 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 02:03:04 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 13:31:15 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	kill_processes(t_ctl *ctl)
 
 	i = 0;
 	while (i < ctl->pop)
-		kill(ctl->pid[i++], SIGTERM);
+		if (ctl->pid[i++] != 0)
+			kill(ctl->pid[i++], SIGTERM);
 }
 
 void	*check_dead(void *p)
@@ -69,7 +70,8 @@ int	main(int argc, char *argv[])
 		return (0);
 	if (init_vars(&ctl) == ERROR)
 		return (ERROR);
-	start_process(&ctl);
+	if (start_process(&ctl) == ERROR)
+		return (free_all(&ctl, ERROR));
 	if (pthread_create(&(ctl.thread_dead), NULL, check_dead, &ctl) == ERROR)
 		return (free_all(&ctl, ERROR));
 	pthread_detach(ctl.thread_dead);

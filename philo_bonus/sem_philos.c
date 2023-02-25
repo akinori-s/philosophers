@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 02:52:57 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 11:59:58 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 13:19:31 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	free_names(t_ctl *ctl, int i)
 	while (i >= 0)
 	{
 		if (ctl->sem_names[i] != NULL)
+		{
 			free(ctl->sem_names[i]);
+			ctl->sem_names[i] = NULL;
+		}
 		i--;
 	}
 	free(ctl->sem_names);
@@ -69,8 +72,11 @@ int	destroy_philo_sems(t_ctl *ctl)
 	i = 0;
 	while (i < ctl->pop)
 	{
-		sem_post(ctl->sem_philos[i]);
-		sem_close(ctl->sem_philos[i]);
+		if (ctl->sem_philos[i] != NULL)
+		{
+			sem_post(ctl->sem_philos[i]);
+			sem_close(ctl->sem_philos[i]);
+		}
 		sem_unlink(ctl->sem_names[i]);
 		i++;
 	}

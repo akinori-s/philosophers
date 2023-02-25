@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:22:22 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 02:29:01 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 13:31:33 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ int	start_process(t_ctl *ctl)
 		{
 			philo_process(ctl, i);
 			return (0);
+		}
+		if (ctl->pid[i] == ERROR)
+		{
+			kill_processes(ctl);
+			return (ERROR);
 		}
 		i++;
 		usleep(50);

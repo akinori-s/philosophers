@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:13:51 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 12:00:36 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 13:33:19 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ typedef struct s_philo
 	pthread_t		thread;
 }	t_philo;
 
+// main_bonus.c
+void			kill_processes(t_ctl *ctl);
+
 // inputs_bonus.c
 int				ps_atoi(char *str, int *err);
 int				ps_isnumeric(char *str);
@@ -100,6 +103,7 @@ int				start_process(t_ctl *ctl);
 
 // init_vars_bonus.c
 int				init_semaphore(t_ctl *ctl);
+int				unlink_sems(void);
 int				destroy_semaphore(t_ctl *ctl);
 int				init_vars(t_ctl *ctl);
 
