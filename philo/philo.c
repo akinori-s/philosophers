@@ -14,17 +14,17 @@
 
 int	start_threads(t_ctl *ctl)
 {
-	int	ret;
 	int	i;
 
 	i = 0;
 	ctl->th = malloc(sizeof(pthread_t) * ctl->pop);
 	if (ctl->th == NULL)
 		return (ERROR);
+	memset(ctl->th, 0, sizeof(pthread_t) * ctl->pop);
 	while (i < ctl->pop)
 	{
-		ret = pthread_create(&(ctl->th[i]), NULL, routine, &(ctl->philos[i]));
-		if (ret != 0)
+		if (pthread_create(&(ctl->th[i]), NULL, routine, &(ctl->philos[i]))
+			!= 0)
 			return (ERROR);
 		usleep(THREAD_CREATION_BUFFER);
 		i += 2;
@@ -32,8 +32,8 @@ int	start_threads(t_ctl *ctl)
 	i = 1;
 	while (i < ctl->pop)
 	{
-		ret = pthread_create(&(ctl->th[i]), NULL, routine, &(ctl->philos[i]));
-		if (ret != 0)
+		if (pthread_create(&(ctl->th[i]), NULL, routine, &(ctl->philos[i]))
+			!= 0)
 			return (ERROR);
 		usleep(THREAD_CREATION_BUFFER);
 		i += 2;
@@ -48,7 +48,8 @@ int	join_threads(t_ctl *ctl)
 	i = 0;
 	while (i < ctl->pop)
 	{
-		pthread_join(ctl->th[i], NULL);
+		if (ctl->th[i] != 0)
+			pthread_join(ctl->th[i], NULL);
 		i++;
 	}
 	return (0);
@@ -125,6 +126,10 @@ int	main(int argc, char **argv)
 	}
 	if (start_threads(&ctl) == ERROR)
 	{
+		pthread_mutex_lock(ctl.pmtx);
+		ctl.philo_dead = 1;
+		pthread_mutex_unlock(ctl.pmtx);
+		join_threads(&ctl);
 		free_return(&ctl);
 		return (ERROR);
 	}
