@@ -6,7 +6,7 @@
 /*   By: asasada <asasada@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:12:53 by asasada           #+#    #+#             */
-/*   Updated: 2023/02/25 14:27:25 by asasada          ###   ########.fr       */
+/*   Updated: 2023/02/25 14:37:24 by asasada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	kill_processes(t_ctl *ctl)
 
 	i = 0;
 	while (i < ctl->pop)
-		if (ctl->pid[i++] != 0)
+		if (ctl->pid[i] != 0)
 			kill(ctl->pid[i++], SIGTERM);
 }
 
