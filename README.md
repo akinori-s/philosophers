@@ -7,10 +7,11 @@ Dining philosophers simulator with multithreading and multiprocessing.
 
 ## How to Run
 
-1. Clone the repository
+1. Clone the repository and compile the program.
 ```bash
 git clone https://github.com/akinori-s/philosophers.git
 cd philosophers/philo
+make
 ```
 
 2. Execute the program in the format below. Times are in milliseconds. The last argument is optional.
